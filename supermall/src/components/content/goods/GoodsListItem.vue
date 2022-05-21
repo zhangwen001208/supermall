@@ -1,6 +1,6 @@
 <template>
   <div class="goodslist-item">
-    <img :src="goodsitem.show.img" />
+    <img :src="goodsitem.show.img" @load="imageitemload" @click="itemclick"/>
     <div class="goods-info">
       <p>{{goodsitem.title}}</p>
       <span class="item-price">{{goodsitem.price}}</span>
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+  import emitter from '../../../assets/css/bus.js'
   export default {
     name: "GoodsListItem",
     props: {
@@ -20,6 +21,17 @@
         default() {
           return {}
         }
+      }
+    },
+    methods:{
+      imageitemload() {
+        /* 通过事件总线将照片加载完成发送出去 */
+       emitter.emit('imageitemload')
+       /* console.log(emitter.emit('imageitemload')) */
+       /* console.log("imageitemload") */
+      },
+      itemclick() {
+        console.log("item点击")
       }
     }
   }
